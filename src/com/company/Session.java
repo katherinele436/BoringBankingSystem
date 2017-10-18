@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import sun.jvm.hotspot.HelloWorld;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +12,7 @@ public class Session {
     int totalDeposit;
     int totalWithdraw;
 
-    public boolean validAccNum(int accNum){ //used to test if account number is valid - Back End ?
+    public boolean validAccNum(int accNum){ //used to test if account number is correctly format and if it already exists  - Back End ?
         return true;
     }
 
@@ -25,19 +23,26 @@ public class Session {
     public String createAccount() throws IOException {
         if (!mode){
             int accNum = getInt("Enter new account number: ");
-            if (validAccNum(accNum)){
+            if (!validAccNum(accNum)){//if account is not in Valid Account List
                 String accName = getStringInput("Enter new account name: ");
                 if (validAccName(accName)){
-                    System.out.println("account " + accNum + "is created for " + accName);
+                    System.out.println("account " + accNum + " is created for " + accName);
                     return "NEW" + accNum + "000 0000000" + accName;
-
                 }
-
             }
-
         }
         return "";
 
+    }
+
+    public String deleteAccount() throws IOException {
+        if (!mode){
+            int accNum = getInt("enter account number: ");
+            if (validAccNum(accNum)) { //if Account is in valid account list
+                System.out.println("account" + accNum + " is deleted");
+            }
+        }
+        return "";
     }
 
     public  String getStringInput ( String prompt) throws IOException {
