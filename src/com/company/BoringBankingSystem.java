@@ -26,10 +26,10 @@ public class BoringBankingSystem {
         return null;
     }
 
-    public static String readNextInput(){
-        String input = null;
-        return input;
-    }
+    //public static String readNextInput(){
+        //String input = null;
+        //return input;
+    //}
 
     public static void logout(){
 
