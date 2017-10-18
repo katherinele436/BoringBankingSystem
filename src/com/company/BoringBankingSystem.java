@@ -1,8 +1,11 @@
 package com.company;
 //import com.company.Session;
+import java.io.*;
 
 public class BoringBankingSystem {
     public static Session Account = null;
+    public static String summaryFile = null;
+    public static int[] validAccountsList;
 
     public static int[] readValidAccounts(){
         int[] accountsList = null;
@@ -19,6 +22,18 @@ public class BoringBankingSystem {
 
     public static String readNextInput(){
         String input = null;
+        try{
+            FileReader fileReader = new FileReader(summaryFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            input = bufferedReader.readLine();
+            bufferedReader.close();
+            return input;
+        }catch(FileNotFoundException e){
+            System.out.println("Could not find valid accounts list file");
+        }
+        catch(IOException ex){
+            System.out.println("Error reading valid accounts list file");
+        }
         return input;
     }
 
@@ -82,14 +97,58 @@ public class BoringBankingSystem {
     }
 
     public static void transfer() {
+        System.out.println("transfer from account number:");
+        String input = readNextInput();
+        String account_one, account_two = null;
 
+        if (checkValidAccounts(input)){
+            account_one = input;
+        }
+        else{
+            System.out.println("error: account does not exist, transaction ended");
+            return;
+        }
+
+        System.out.println("transfer to account number:");
+        input = readNextInput();
+
+        if (checkValidAccounts(input)){
+            account_two = input;
+        }
+        else{
+            System.out.println("error: account does not exist, transaction ended");
+            return;
+        }
+
+        System.out.println("enter amount:");
+        input = readNextInput();
+        int amount = 0;
+        try{
+            amount = Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            System.out.println("error: invalid amount, transaction ended");
+            return;
+        }
+
+        double dollars = 0;
+        if (withinSingleTransferLimit(amount)){
+            dollars = amount / 100;
+        }
+        else{
+            System.out.println("error: single transfer limit exceeded");
+            return;
+        }
+
+        System.out.printf("Transferred $%0.2f from account %d to account %d", dollars, account_one, account_two);
+        int length = Account.summary.length;
+        Account.summary[length - 1] = "XFR " + account_one + " " + amount + " " + account_two + " ***\n";
     }
 
     public static void Main(String[] args) {
         // write your code here
         boolean login = false;
-        int[] validAccountsList = readValidAccounts();
-        String summaryFile = args[1];
+        validAccountsList = readValidAccounts();
+        summaryFile = args[1];
         Account = waitForLogin();
         while (login) {
             String input = readNextInput();
