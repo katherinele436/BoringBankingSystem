@@ -1,17 +1,24 @@
 package com.company;
 import com.company.Session;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 
 public class BoringBankingSystem {
     public static Session Account = null;
 
 
-    public static int[] readValidAccounts(){
-        int[] accountsList = null;
+    public static ArrayList<Integer> readValidAccounts() throws Exception{
+        ArrayList<Integer> accountsList = new ArrayList<>();
+        FileReader theList = new FileReader("ValidAccountsList.txt");
+        BufferedReader readList = new BufferedReader(theList);
+        String line;
+        while ((line = readList.readLine()) != null){
+            accountsList.add(Integer.parseInt(line));
+        }
+
         return accountsList;
     }
 
@@ -38,6 +45,7 @@ public class BoringBankingSystem {
     public static void writeSummaryFile(){
 
     }
+
 
     public static String createAccount() throws IOException {
         if (!mode){
