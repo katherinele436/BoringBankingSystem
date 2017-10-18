@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 
 public class BoringBankingSystem {
-
+    public static Session Account = null;
 
 
     public static int[] readValidAccounts(){
@@ -15,7 +15,13 @@ public class BoringBankingSystem {
         return accountsList;
     }
 
-    public static Session waitForLogin(){
+    public static Session waitForLogin() throws IOException {
+        String loginStr = getStringInput("");
+        if (loginStr.equals("login")){
+            String modeStr = getStringInput("login as agent or machine?");
+            if (modeStr.equals("agent")){ Account.mode = true;}
+            else if(modeStr.equals("machine")){ Account.mode = false;}
+        }
 
         return null;
     }
@@ -36,7 +42,7 @@ public class BoringBankingSystem {
     public static String createAccount() throws IOException {
         if (!mode){
             int accNum = getInt("Enter new account number: ");
-            if (!validAccNum(accNum)){//if account is not in Valid Account List
+            if (!validAccNum(accNum) && !validAccList(accNum)){//if account is not in Valid Account List
                 String accName = getStringInput("Enter new account name: ");
                 if (validAccName(accName)){
                     System.out.println("account " + accNum + " is created for " + accName);
@@ -51,11 +57,15 @@ public class BoringBankingSystem {
     public static String deleteAccount() throws IOException {
         if (!mode){
             int accNum = getInt("enter account number: ");
-            if (validAccNum(accNum)) { //if Account is in valid account list
+            if (validAccList(accNum)) { //if Account is in valid account list
                 System.out.println("account" + accNum + " is deleted");
             }
         }
         return "";
+    }
+
+    public static boolean validAccList(int accNum) {
+        return true;
     }
 
     public static boolean validAccNum(int accNum){ //used to test if account number is correctly format and if it already exists  - Back End ?

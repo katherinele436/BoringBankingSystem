@@ -20,5 +20,9 @@ public class Session {
         return true;
     }
 
+    public boolean validAccList(int accNum) {
+        return true;
+    }
+
 }
 
