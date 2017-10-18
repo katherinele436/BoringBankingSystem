@@ -3,6 +3,8 @@ import com.company.Session;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class BoringBankingSystem {
         FileReader theList = new FileReader("ValidAccountsList.txt");
         BufferedReader readList = new BufferedReader(theList);
         String line;
-        while ((line = readList.readLine()) != null){
+        while ((line = readList.readLine()) != null && !line.equals("0000000")){
             accountsList.add(Integer.parseInt(line));
         }
 
@@ -43,8 +45,17 @@ public class BoringBankingSystem {
     }
 
     public static void writeSummaryFile(){
-
+        int count = 0;
+        Path file = Paths.get(outputFile);
+        try (BufferedWriter writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            for (String aVal : ar)
+                writer.write(aVal + "\r\n"); // Note addition of line terminator
+        } catch (IOException err) {
+            System.err.println(err.getMessage());
+        }
     }
+
+}
 
 
     public static String createAccount() throws IOException {
