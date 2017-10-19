@@ -13,6 +13,8 @@ public class BoringBankingSystem {
     public static Session Account = null;
     public static ArrayList<Integer> validAccountsList = null;
     public static ArrayList<String> summaryString = null;
+    public static String inputFile;
+    public static String summaryFile;
 
     public static ArrayList<Integer> readValidAccounts() throws Exception {
         ArrayList<Integer> accountsList = new ArrayList<>();
@@ -38,6 +40,19 @@ public class BoringBankingSystem {
 
     public static String readNextInput(){
         String input = null;
+        if (inputFile != null)
+        try{
+            FileReader fileReader = new FileReader(inputFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            input = bufferedReader.readLine();
+            bufferedReader.close();
+            return input;
+        }catch(FileNotFoundException e){
+            System.out.println("Could not find valid accounts list file");
+        }
+        catch(IOException ex){
+            System.out.println("Error reading valid accounts list file");
+        }
         return input;
     }
 
@@ -163,13 +178,17 @@ public class BoringBankingSystem {
         return  0;
     }
 
-    public static void Main(String[] args) throws Exception {
-        // write your code here
+    public static boolean withinSingleTransferLimit(int amount){
+        return true;
+    }
+
+    public static void Main(String[] args) throws Exception{
         boolean next = true; //used for while loop until the command quit is given
         boolean login = false;
         validAccountsList = readValidAccounts();
         summaryString = new ArrayList<>() ;// create a summaryString arrayList to store all the summary strings output
-        String summaryFile = args[1];
+        summaryFile = args[1];
+        inputFile = args[0];
         Account = waitForLogin();
 
         while (next){
