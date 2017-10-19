@@ -85,7 +85,7 @@ public class BoringBankingSystem {
         String input = readNextInput();
         String account_number = null;
 
-        if (validAccList(input)){
+        if (validAccList(Integer.parseInt(input))){
             account_number = input;
         }
         else{
@@ -159,8 +159,6 @@ public class BoringBankingSystem {
         return true;
     }
 
-    public static void transfer() {    }
-
     public static String getStringInput ( String prompt) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String accNumStr;
@@ -176,6 +174,103 @@ public class BoringBankingSystem {
         catch (NumberFormatException e){
         }
         return  0;
+    }
+
+    public static void withdraw(){
+        System.out.println("enter account number:");
+        String input = readNextInput();
+        String account_number = null;
+
+        if (validAccList(Integer.parseInt(input))){
+            account_number = input;
+        }
+        else{
+            System.out.println("error: account does not exist, transaction ended");
+            return;
+        }
+
+        System.out.println("enter amount:");
+        input = readNextInput();
+        int amount = 0;
+        try{
+            amount = Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            System.out.println("error: invalid amount, transaction ended");
+            return;
+        }
+
+        double dollars = 0;
+        if (withinSingleWithdrawLimit(amount)){
+            if (withinTotalWithdrawLimit()) {
+                dollars = amount / 100;
+            }
+            else{
+                System.out.println("error: total withdraw limit exceeded");
+                return;
+            }
+        }else{
+            System.out.println("error: single withdraw limit exceeded");
+            return;
+        }
+
+        System.out.printf("Withdrew $%0.2f from account %d", dollars, account_number);
+        Account.summary.add("WDR 0000000 " + amount + " " + account_number + " ***\n");
+
+    }
+
+    public static boolean withinSingleWithdrawLimit(int amount){
+        return true;
+    }
+
+    public static boolean withinTotalWithdrawLimit(){
+        return true;
+    }
+
+    public static void transfer() {
+        System.out.println("transfer from account number:");
+        String input = readNextInput();
+        String account_one, account_two = null;
+
+        if (validAccList(Integer.parseInt(input))){
+            account_one = input;
+        }
+        else{
+            System.out.println("error: account does not exist, transaction ended");
+            return;
+        }
+
+        System.out.println("transfer to account number:");
+        input = readNextInput();
+
+        if (validAccList(Integer.parseInt(input))){
+            account_two = input;
+        }
+        else{
+            System.out.println("error: account does not exist, transaction ended");
+            return;
+        }
+
+        System.out.println("enter amount:");
+        input = readNextInput();
+        int amount = 0;
+        try{
+            amount = Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            System.out.println("error: invalid amount, transaction ended");
+            return;
+        }
+
+        double dollars = 0;
+        if (withinSingleTransferLimit(amount)){
+            dollars = amount / 100;
+        }
+        else{
+            System.out.println("error: single transfer limit exceeded");
+            return;
+        }
+
+        System.out.printf("Transferred $%0.2f from account %d to account %d", dollars, account_one, account_two);
+        Account.summary.add("XFR " + account_one + " " + amount + " " + account_two + " ***\n");
     }
 
     public static boolean withinSingleTransferLimit(int amount){
