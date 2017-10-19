@@ -44,8 +44,8 @@ public class BoringBankingSystem {
 
     }
 
-    public static void writeSummaryFile(){
-        int count = 0;
+    //store each line in an array list and write the array to the summary file 
+    public static void writeSummaryFile(String outputFile, ArrayList<String> ar){
         Path file = Paths.get(outputFile);
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             for (String aVal : ar)
