@@ -1,39 +1,42 @@
 package com.company;
-//import com.company.Session;
+import com.company.Session;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 
 public class BoringBankingSystem {
     public static Session Account = null;
-    public static String summaryFile = null;
-    public static int[] validAccountsList;
 
-    public static int[] readValidAccounts(){
-        int[] accountsList = null;
+
+    public static ArrayList<Integer> readValidAccounts() throws Exception{
+        ArrayList<Integer> accountsList = new ArrayList<>();
+        FileReader theList = new FileReader("ValidAccountsList.txt");
+        BufferedReader readList = new BufferedReader(theList);
+        String line;
+        while ((line = readList.readLine()) != null && !line.equals("0000000")){
+            accountsList.add(Integer.parseInt(line));
+        }
+
         return accountsList;
     }
 
-    public static boolean checkValidAccounts(String account){
-        return true;
-    }
+    public static Session waitForLogin() throws IOException {
+        String loginStr = getStringInput("");
+        if (loginStr.equals("login")){
+            String modeStr = getStringInput("login as agent or machine?");
+            if (modeStr.equals("agent")){ Account.mode = true;}
+            else if(modeStr.equals("machine")){ Account.mode = false;}
+        }
 
-    public static Session waitForLogin(){
         return null;
     }
 
     public static String readNextInput(){
         String input = null;
-        try{
-            FileReader fileReader = new FileReader(summaryFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            input = bufferedReader.readLine();
-            bufferedReader.close();
-            return input;
-        }catch(FileNotFoundException e){
-            System.out.println("Could not find valid accounts list file");
-        }
-        catch(IOException ex){
-            System.out.println("Error reading valid accounts list file");
-        }
         return input;
     }
 
@@ -41,115 +44,82 @@ public class BoringBankingSystem {
 
     }
 
-    public static void writeSummaryFile(){
+    //store each line in an array list and write the array to the summary file
+    public static void writeSummaryFile(String outputFile, ArrayList<String> ar){
+        Path file = Paths.get(outputFile);
+        try (BufferedWriter writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+            for (String aVal : ar)
+                writer.write(aVal + "\r\n"); // Note addition of line terminator
+        } catch (IOException err) {
+            System.err.println(err.getMessage());
+        }
+    }
+
+
+
+    public static String createAccount() throws IOException {
+        if (!mode){
+            int accNum = getInt("Enter new account number: ");
+            if (!validAccNum(accNum) && !validAccList(accNum)){//if account is not in Valid Account List
+                String accName = getStringInput("Enter new account name: ");
+                if (validAccName(accName)){
+                    System.out.println("account " + accNum + " is created for " + accName);
+                    return "NEW" + accNum + "000 0000000" + accName;
+                }
+            }
+        }
+        return "";
 
     }
 
-    public static void withdraw(){
-        System.out.println("enter account number:");
-        String input = readNextInput();
-        String account_number = null;
-
-        if (checkValidAccounts(input)){
-            account_number = input;
-        }
-        else{
-            System.out.println("error: account does not exist, transaction ended");
-            return;
-        }
-
-        System.out.println("enter amount:");
-        input = readNextInput();
-        int amount = 0;
-        try{
-            amount = Integer.parseInt(input);
-        }catch (NumberFormatException e){
-            System.out.println("error: invalid amount, transaction ended");
-            return;
-        }
-
-        double dollars = 0;
-        if (withinSingleWithdrawLimit(amount)){
-            if (withinTotalWithdrawLimit()) {
-                dollars = amount / 100;
+    public static String deleteAccount() throws IOException {
+        if (!mode){
+            int accNum = getInt("enter account number: ");
+            if (validAccList(accNum)) { //if Account is in valid account list
+                System.out.println("account" + accNum + " is deleted");
+                return "DEL" + accNum + "000 0000000 ***";
             }
-            else{
-                System.out.println("error: total withdraw limit exceeded");
-                return;
-            }
-        }else{
-            System.out.println("error: single withdraw limit exceeded");
-            return;
         }
-
-        System.out.printf("Withdrew $%0.2f from account %d", dollars, account_number);
-        int length = Account.summary.length;
-        Account.summary[length - 1] = "WDR 0000000 " + amount + " " + account_number + " ***\n";
-
+        return "";
     }
 
-    public static boolean withinSingleWithdrawLimit(int amount){
+    public static boolean validAccList(int accNum) {
         return true;
     }
 
-    public static boolean withinTotalWithdrawLimit(){
+    public static boolean validAccNum(int accNum){ //used to test if account number is correctly format and if it already exists  - Back End ?
         return true;
     }
 
-    public static void transfer() {
-        System.out.println("transfer from account number:");
-        String input = readNextInput();
-        String account_one, account_two = null;
-
-        if (checkValidAccounts(input)){
-            account_one = input;
-        }
-        else{
-            System.out.println("error: account does not exist, transaction ended");
-            return;
-        }
-
-        System.out.println("transfer to account number:");
-        input = readNextInput();
-
-        if (checkValidAccounts(input)){
-            account_two = input;
-        }
-        else{
-            System.out.println("error: account does not exist, transaction ended");
-            return;
-        }
-
-        System.out.println("enter amount:");
-        input = readNextInput();
-        int amount = 0;
-        try{
-            amount = Integer.parseInt(input);
-        }catch (NumberFormatException e){
-            System.out.println("error: invalid amount, transaction ended");
-            return;
-        }
-
-        double dollars = 0;
-        if (withinSingleTransferLimit(amount)){
-            dollars = amount / 100;
-        }
-        else{
-            System.out.println("error: single transfer limit exceeded");
-            return;
-        }
-
-        System.out.printf("Transferred $%0.2f from account %d to account %d", dollars, account_one, account_two);
-        int length = Account.summary.length;
-        Account.summary[length - 1] = "XFR " + account_one + " " + amount + " " + account_two + " ***\n";
+    public static boolean validAccName(String accName) { //used to test if account name is valid - Back End ?
+        return true;
     }
 
-    public static void Main(String[] args) {
+
+    public static String getStringInput ( String prompt) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String accNumStr;
+        accNumStr = br.readLine();
+        System.out.println(prompt);
+        return accNumStr;
+    }
+
+    public static int getInt( String prompt) throws IOException {
+        try {
+            return Integer.parseInt(getStringInput(prompt));
+        }
+        catch (NumberFormatException e){
+        }
+        return  0;
+    }
+
+    public static void Main(String[] args) throws Exception {
         // write your code here
         boolean login = false;
-        validAccountsList = readValidAccounts();
-        summaryFile = args[1];
-        Account = waitForLogin();
+        ArrayList<Integer> validAccountsList = readValidAccounts();
+        ArrayList<String> summaryString = new ArrayList<>() ;
+        String summaryFile = args[1];
+        Session Account = waitForLogin();
         while (login) {
             String input = readNextInput();
             switch (input) {
@@ -177,7 +147,8 @@ public class BoringBankingSystem {
             }
         }
         logout();
-        writeSummaryFile();
+        summaryString.add("EOS 0000000 000 0000000 ***");
+        writeSummaryFile("summary.txt", summaryString);
     }
 
 
