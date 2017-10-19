@@ -13,12 +13,12 @@ public class BoringBankingSystem {
     public static Session Account = null;
     public static ArrayList<Integer> validAccountsList = null;
     public static ArrayList<String> summaryString = null;
-    public static String inputFile;
     public static String summaryFile;
+    public static String accountsListFile;
 
     public static ArrayList<Integer> readValidAccounts() throws Exception {
         ArrayList<Integer> accountsList = new ArrayList<>();
-        FileReader theList = new FileReader("ValidAccountsList.txt");
+        FileReader theList = new FileReader(accountsListFile);
         BufferedReader readList = new BufferedReader(theList);
         String line;
         while ((line = readList.readLine()) != null && !line.equals("0000000")) {
@@ -28,14 +28,18 @@ public class BoringBankingSystem {
         return accountsList;
     }
 
-    public static Session waitForLogin() throws IOException {
+    public static Session waitForLogin(boolean login) throws IOException {
         String loginStr = getStringInput("");
         if (loginStr.equals("login")){
             String modeStr = getStringInput("login as agent or machine?");
             if (modeStr.equals("agent")){ Account.mode = true;}
             else if(modeStr.equals("machine")){ Account.mode = false;}
         }
-        return null;
+        else if(loginStr.equals("quit")){
+            System.exit(0);
+        }
+        System.out.println("error: invalid login");
+        return waitForLogin(login);
     }
 
     public static String readNextInput(){
@@ -283,10 +287,13 @@ public class BoringBankingSystem {
         validAccountsList = readValidAccounts();
         summaryString = new ArrayList<>() ;// create a summaryString arrayList to store all the summary strings output
         summaryFile = args[1];
-        inputFile = args[0];
-        Account = waitForLogin();
+        accountsListFile = args[0];
+
 
         while (next){
+            if (!login) {
+                Account = waitForLogin(login);
+            }
             String input = readNextInput();
             switch (input) {
                 case "createacct":
@@ -309,9 +316,6 @@ public class BoringBankingSystem {
                         login = false;
                         writeSummaryFile();
                     }
-                    break;
-                case "quit"://command to exit the while loop
-                    next = false;
                     break;
                 default:
                     System.out.println("invalid transaction");
