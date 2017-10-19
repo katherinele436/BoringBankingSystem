@@ -57,30 +57,29 @@ public class BoringBankingSystem {
 
 
 
-    public static String createAccount() throws IOException {
-        if (!mode){
+    public static void createAccount( ArrayList<String> sumString) throws IOException {
+        if (!Account.mode){
             int accNum = getInt("Enter new account number: ");
             if (!validAccNum(accNum) && !validAccList(accNum)){//if account is not in Valid Account List
                 String accName = getStringInput("Enter new account name: ");
                 if (validAccName(accName)){
                     System.out.println("account " + accNum + " is created for " + accName);
-                    return "NEW" + accNum + "000 0000000" + accName;
+                    sumString.add("NEW" + accNum + "000 0000000" + accName);// append summary string to summaryString arraylist
                 }
             }
         }
-        return "";
 
     }
 
-    public static String deleteAccount() throws IOException {
-        if (!mode){
+    public static void deleteAccount(ArrayList<String> sumString) throws IOException {
+        if (!Account.mode){
             int accNum = getInt("enter account number: ");
             if (validAccList(accNum)) { //if Account is in valid account list
                 System.out.println("account" + accNum + " is deleted");
-                return "DEL" + accNum + "000 0000000 ***";
+                sumString.add("DEL" + accNum + "000 0000000 ***");// append summary string to summaryString arraylist
             }
         }
-        return "";
+
     }
 
     public static boolean validAccList(int accNum) {
@@ -117,17 +116,17 @@ public class BoringBankingSystem {
         // write your code here
         boolean login = false;
         ArrayList<Integer> validAccountsList = readValidAccounts();
-        ArrayList<String> summaryString = new ArrayList<>() ;
+        ArrayList<String> summaryString = new ArrayList<>() ;// create a summaryString arrayList to store all the summary strings output
         String summaryFile = args[1];
         Session Account = waitForLogin();
         while (login) {
             String input = readNextInput();
             switch (input) {
                 case "createacct":
-                    createAccount();
+                    createAccount(summaryString);// append summary string output from create account
                     break;
                 case "deleteacct":
-                    deleteAccount();
+                    deleteAccount(summaryString);// append summary string output from delete account
                     break;
                 case "withdraw":
                     withdraw();
