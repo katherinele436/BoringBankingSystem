@@ -5,6 +5,7 @@ import java.io.*;
 public class BoringBankingSystem {
     public static Session Account = null;
     public static String summaryFile = null;
+    public static String inputFile = null;
     public static int[] validAccountsList;
 
     public static int[] readValidAccounts(){
@@ -22,8 +23,9 @@ public class BoringBankingSystem {
 
     public static String readNextInput(){
         String input = null;
+        if ()
         try{
-            FileReader fileReader = new FileReader(summaryFile);
+            FileReader fileReader = new FileReader(inputFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             input = bufferedReader.readLine();
             bufferedReader.close();
@@ -144,10 +146,15 @@ public class BoringBankingSystem {
         Account.summary[length - 1] = "XFR " + account_one + " " + amount + " " + account_two + " ***\n";
     }
 
+    public static boolean withinSingleTransferLimit(int amount){
+        return true;
+    }
+
     public static void Main(String[] args) {
         // write your code here
         boolean login = false;
         validAccountsList = readValidAccounts();
+        inputFile = args[0];
         summaryFile = args[1];
         Account = waitForLogin();
         while (login) {
