@@ -127,6 +127,7 @@ public class BoringBankingSystem {
                 }
             }
         }
+        else { System.out.println("error: cannot create account in machine mode, transaction ended"); }
     }
 
     public static void deleteAccount() throws IOException {
@@ -137,6 +138,7 @@ public class BoringBankingSystem {
                 Account.summary.add("DEL" + accNum + "000 0000000 ***");// append summary string to summaryString arraylist
             }
         }
+        else { System.out.println("error: cannot delete account in machine mode, transaction ended"}
     }
 
     public static boolean withinSingleDepositLimit(int amount){
