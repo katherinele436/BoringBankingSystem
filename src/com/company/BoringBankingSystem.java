@@ -35,16 +35,16 @@ public class BoringBankingSystem {
         return null;
     }
 
-    //public static String readNextInput(){
+    public static String readNextInput(){
         //String input = null;
         //return input;
-    //}
+    }
 
     public static void logout(){
 
     }
 
-    //store each line in an array list and write the array to the summary file 
+    //store each line in an array list and write the array to the summary file
     public static void writeSummaryFile(String outputFile, ArrayList<String> ar){
         Path file = Paths.get(outputFile);
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
@@ -55,7 +55,6 @@ public class BoringBankingSystem {
         }
     }
 
-}
 
 
     public static String createAccount() throws IOException {
@@ -113,10 +112,10 @@ public class BoringBankingSystem {
         return  0;
     }
 
-    public static void Main(String[] args) throws IOException {
+    public static void Main(String[] args) throws Exception {
         // write your code here
         boolean login = false;
-        int[] validAccountsList = readValidAccounts();
+        ArrayList<Integer> validAccountsList = readValidAccounts();
         String summaryFile = args[1];
         Session Account = waitForLogin();
         while (login) {
