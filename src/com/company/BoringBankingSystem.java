@@ -1,11 +1,12 @@
 package com.company;
+import java.util.ArrayList;
+import java.io.*
 //import com.company.Session;
 
 public class BoringBankingSystem {
     public static Session Account = null;
-
     public static int[] readValidAccounts(){
-        int[] accountsList = null;
+        ArrayList<int> accountslist = new ArrayList<int>();
         return accountsList;
     }
 
@@ -22,11 +23,58 @@ public class BoringBankingSystem {
         return input;
     }
 
-    public static void logout(){
-
+    public static boolean logout(boolean login){
+        if(login){
+            Account.summary.add("EOS *** *** *** ***\n");
+            return true;
+        }else{
+            System.out.println("erorr: cannot logout if not logged in");
+            return false;
+        }
     }
 
     public static void writeSummaryFile(){
+        FileWriter writer = new FileWriter("output.txt");
+        for(String str: Account.summary) {
+            writer.write(str);
+        }
+        writer.close();
+    }
+    public static void deposit(){
+        System.out.println("enter account number:");
+        String input = readNextInput();
+        String account_number = null;
+
+        if (checkValidAccounts(input)){
+            account_number = input;
+        }
+        else{
+            System.out.println("error: account does not exist, transaction ended");
+            return;
+        }
+
+        System.out.println("enter amount:");
+        input = readNextInput();
+        int amount = 0;
+        try{
+            amount = Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            System.out.println("error: invalid amount, transaction ended");
+            return;
+        }
+
+        double dollars = 0;
+        if (withinSingleDepositLimit(amount)){
+                dollars = amount / 100;
+        }else{
+            System.out.println("error: single deposit limit exceeded");
+            return;
+        }
+
+        System.out.printf("Deposited $%0.2f into account %d", dollars, account_number);
+        int length = Account.summary.length;
+        Account.summary.add("DEP 0000000 " + amount + " " + account_number + " ***\n");
+
 
     }
 
@@ -70,7 +118,14 @@ public class BoringBankingSystem {
         System.out.printf("Withdrew $%0.2f from account %d", dollars, account_number);
         int length = Account.summary.length;
         Account.summary[length - 1] = "WDR 0000000 " + amount + " " + account_number + " ***\n";
+    }
 
+    public static boolean withinSingleDepositLimit(int amount){
+        if(amount >= 100000){
+            return false;
+        } else{
+            return true;
+        }
     }
 
     public static boolean withinSingleWithdrawLimit(int amount){
@@ -81,17 +136,16 @@ public class BoringBankingSystem {
         return true;
     }
 
-    public static void transfer() {
-
-    }
+    public static void transfer() {    }
 
     public static void Main(String[] args) {
         // write your code here
         boolean login = false;
+        boolean continue = true; //used for while loop until the command quit is given
         int[] validAccountsList = readValidAccounts();
         String summaryFile = args[1];
         Account = waitForLogin();
-        while (login) {
+        while (continue){
             String input = readNextInput();
             switch (input) {
                 case "createacct":
@@ -110,15 +164,19 @@ public class BoringBankingSystem {
                     transfer();
                     break;
                 case "logout":
-                    login = false;
+                    if (logout(login)) {
+                        login = false;
+                        writeSummaryFile();
+                    }
+                    break;
+                case "quit"://command to exit the while loop
+                    continue = false;
                     break;
                 default:
                     System.out.println("invalid transaction");
                     break;
             }
         }
-        logout();
-        writeSummaryFile();
     }
 
 
