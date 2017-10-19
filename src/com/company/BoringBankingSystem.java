@@ -120,27 +120,29 @@ public class BoringBankingSystem {
 
     }
 
-    public static void createAccount( ArrayList<String> sumString) throws IOException {
+    public static void createAccount() throws IOException {
         if (!Account.mode){
             int accNum = getInt("Enter new account number: ");
             if (!validAccNum(accNum) && !validAccList(accNum)){//if account is not in Valid Account List
                 String accName = getStringInput("Enter new account name: ");
                 if (validAccName(accName)){
                     System.out.println("account " + accNum + " is created for " + accName);
-                    sumString.add("NEW" + accNum + "000 0000000" + accName);// append summary string to summaryString arraylist
+                    Account.summary.add("NEW" + accNum + "000 0000000" + accName);// append summary string to summaryString arraylist
                 }
             }
         }
+        else { System.out.println("error: cannot create account in machine mode, transaction ended"); }
     }
 
-    public static void deleteAccount(ArrayList<String> sumString) throws IOException {
+    public static void deleteAccount() throws IOException {
         if (!Account.mode) {
             int accNum = getInt("enter account number: ");
             if (validAccList(accNum)) { //if Account is in valid account list
                 System.out.println("account" + accNum + " is deleted");
-                sumString.add("DEL" + accNum + "000 0000000 ***");// append summary string to summaryString arraylist
+                Account.summary.add("DEL" + accNum + "000 0000000 ***");// append summary string to summaryString arraylist
             }
         }
+        else { System.out.println("error: cannot delete account in machine mode, transaction ended"}
     }
 
     public static boolean withinSingleDepositLimit(int amount){
@@ -297,10 +299,10 @@ public class BoringBankingSystem {
             String input = readNextInput();
             switch (input) {
                 case "createacct":
-                    createAccount(summaryString);// append summary string output from create account
+                    createAccount();// append summary string output from create account
                     break;
                 case "deleteacct":
-                    deleteAccount(summaryString);// append summary string output from delete account
+                    deleteAccount();// append summary string output from delete account
                     break;
                 case "withdraw":
                     withdraw();
