@@ -180,7 +180,7 @@ public class BoringBankingSystem {
 
     public static boolean logout(boolean login){
         if(login){
-            Account.summary.add("EOS *** *** *** ***\n");
+            Account.summary.add("EOS 0000000 000 0000000 ***\n");
             return true;
         }else{
             System.out.println("error: cannot logout if not logged in");
