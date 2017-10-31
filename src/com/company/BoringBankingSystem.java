@@ -21,7 +21,8 @@ public class BoringBankingSystem {
     }
 
     public static boolean waitForLogin(boolean login) throws IOException {
-        String loginStr = getStringInput("");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String loginStr = br.readLine();
         Account = new Session();
         if (loginStr.equals("login")){
             String modeStr = getStringInput("log in as agent or machine?");
@@ -294,7 +295,8 @@ public class BoringBankingSystem {
             while (!login) {
                 login = waitForLogin(login);
             }
-            String input = getStringInput("");
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String input = br.readLine();
             switch (input) {
                 case "createacct":
                     createAccount();// append summary string output from create account
