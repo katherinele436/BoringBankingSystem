@@ -25,6 +25,7 @@ public class BoringBankingSystem {
         String loginStr = br.readLine();
         Account = new Session();
         if (loginStr.equals("login")){
+            System.out.println("logged in");
             String modeStr = getStringInput("log in as agent or machine?");
             if (modeStr.equals("agent")){
                 System.out.println("logged in as agent");
@@ -181,6 +182,7 @@ public class BoringBankingSystem {
 
     public static boolean logout(boolean login){
         if(login){
+            System.out.println("logged out");
             Account.summary.add("EOS 0000000 000 0000000 ***\n");
             return true;
         }else{
@@ -274,7 +276,12 @@ public class BoringBankingSystem {
     }
 
     public static boolean validAccList(int accNum) {
-        return true;
+        if (validAccountsList.contains(accNum)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public static boolean validAccNum(int accNum){ //used to test if account number is correctly format and if it already exists  - Back End ?
