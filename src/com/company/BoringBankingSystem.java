@@ -293,6 +293,7 @@ public class BoringBankingSystem {
     }
 
     public static boolean validAccName(String accName) { //used to test if account name is valid - Back End ?
+
         if (accName.endsWith(" ") ){
             System.out.println("error: account name ends with a space, transaction ended");
             return false;
@@ -301,7 +302,7 @@ public class BoringBankingSystem {
             System.out.println("error: account name begins with a space, transaction ended");
             return false;
         }
-        else if (accName.matches("[^A-Za-z0-9 ]")){
+        else if (!accName.matches("[^A-Za-z0-9 ]")){
             System.out.println("error: account name has a non-alphanumeric character, transaction ended");
             return false;
         }
