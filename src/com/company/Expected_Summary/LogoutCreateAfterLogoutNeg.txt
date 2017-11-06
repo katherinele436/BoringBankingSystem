@@ -1,1 +1,5 @@
-EOS 0000000 000 0000000 ***
+logged in
+login as agent or machine?
+logged in as agent
+logged out
+error: log in invalid
