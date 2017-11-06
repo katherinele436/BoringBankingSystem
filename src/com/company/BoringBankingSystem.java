@@ -21,7 +21,7 @@ public class BoringBankingSystem {
         return accountsList;
     }
 
-    public static boolean waitForLogin(boolean login) throws IOException {
+    public static boolean waitForLogin() throws IOException {
         String loginStr = br.readLine();
         Account = new Session();
         if (loginStr.equals("login")){
@@ -47,12 +47,16 @@ public class BoringBankingSystem {
 
     public static void createAccount() throws IOException {
         if (Account.mode){
-            int accNum = getInt("Enter new account number: ");
+            int accNum = getInt("enter new account number:");
             //if account is not in Valid Account List
-            if (!validAccNum(accNum) || validAccList(accNum)) {
+            if (validAccList(accNum)) {
+                System.out.println("error: account number already in use, transaction ended");
                 return;
             }
-            String accName = getStringInput("Enter new account name: ");
+            if(!validAccNum(accNum)){
+                return;
+            }
+            String accName = getStringInput("enter new account name:");
             if (!validAccName(accName)) {
                 return;
             }
@@ -67,14 +71,14 @@ public class BoringBankingSystem {
 
     public static void deleteAccount() throws IOException {
         if (Account.mode) {
-            int accNum = getInt("enter account number: ");
+            int accNum = getInt("enter account number:");
             //if Account is in valid account list
             if (!validAccList(accNum)) {
                 return;
             }
-            System.out.println("account" + accNum + " is deleted");
+            System.out.println("account " + accNum + " deleted");
             // append summary string summary list
-            Account.summary.add("DEL " + accNum + "000 0000000 ***");
+            Account.summary.add("DEL " + accNum + " 000 0000000 ***\n");
         }
         else {
             System.out.println("error: cannot delete account in machine mode, transaction ended");
@@ -93,7 +97,7 @@ public class BoringBankingSystem {
         }
         int amount;
         try{
-            amount = getInt("enter amount");
+            amount = getInt("enter amount:");
         }catch (NumberFormatException e){
             System.out.println("error: invalid amount, transaction ended");
             return;
@@ -102,10 +106,10 @@ public class BoringBankingSystem {
         if (withinSingleDepositLimit(amount)){
             dollars = amount / 100;
         }else{
-            System.out.println("error: single deposit limit exceeded");
+            System.out.println("error: single deposit limit exceeded, transaction ended");
             return;
         }
-        System.out.printf("Deposited $%.2f into account %d\n", dollars, account_number);
+        System.out.printf("deposited $%.2f into account %d\n", dollars, account_number);
         Account.summary.add("DEP " + account_number + " "+ amount + " " + "0000000" + " ***\n");
     }
 
@@ -132,14 +136,14 @@ public class BoringBankingSystem {
                 dollars = amount / 100;
             }
             else{
-                System.out.println("error: total withdraw limit exceeded");
+                System.out.println("error: total withdraw limit exceeded, transaction ended");
                 return;
             }
         }else{
-            System.out.println("error: single withdraw limit exceeded");
+            System.out.println("error: single withdraw limit exceeded, transaction ended");
             return;
         }
-        System.out.printf("Withdrew $%.2f from account %d\n", dollars, account_number);
+        System.out.printf("withdrew $%.2f from account %d\n", dollars, account_number);
         Account.summary.add("WDR " + account_number + " "+ amount + " " + "0000000" + " ***\n");
     }
 
@@ -173,10 +177,10 @@ public class BoringBankingSystem {
             dollars = amount / 100;
         }
         else{
-            System.out.println("error: single transfer limit exceeded");
+            System.out.println("error: single transfer limit exceeded, transaction ended");
             return;
         }
-        System.out.printf("Transferred $%.2f from account %d to account %d\n", dollars, account_one, account_two);
+        System.out.printf("transferred $%.2f from account %d to account %d\n", dollars, account_one, account_two);
         Account.summary.add("XFR " + account_one + " " + amount + " " + account_two + " ***\n");
     }
 
@@ -275,6 +279,7 @@ public class BoringBankingSystem {
         }
     }
 
+    //used to test if account number is already in valid accounts list
     public static boolean validAccList(int accNum) {
         if (validAccountsList.contains(accNum)){
             return true;
@@ -284,7 +289,8 @@ public class BoringBankingSystem {
         }
     }
 
-    public static boolean validAccNum(int accNum){//used to test if account number is correctly format and if it already exists  - Back End ?
+    //used to test if account number is correctly formatted
+    public static boolean validAccNum(int accNum){
         if (accNum < 1000000 || accNum > 10000000) {
             System.out.println("error: account number must be 7 characters long, transaction ended");
             return false;
@@ -302,13 +308,13 @@ public class BoringBankingSystem {
             System.out.println("error: account name begins with a space, transaction ended");
             return false;
         }
-        else if (!accName.matches("[^A-Za-z0-9 ]")){
-            System.out.println("error: account name has a non-alphanumeric character, transaction ended");
-            return false;
-        }
         else if (accName.length() > 30 || accName.length() < 3){
             System.out.println("error: account name must be between 3 and 30 characters, transaction ended");
             return  false;
+        }
+        else if (!accName.matches("[^A-Za-z0-9 _]")){
+            System.out.println("error: account name has a non-alphanumeric character, transaction ended");
+            return false;
         }
 
         return true;
@@ -323,7 +329,7 @@ public class BoringBankingSystem {
         validAccountsList = readValidAccounts();
         while (next){
             while (!login) {
-                login = waitForLogin(login);
+                login = waitForLogin();
             }
             String input = br.readLine();
             switch (input) {
@@ -352,7 +358,7 @@ public class BoringBankingSystem {
                     }
                     break;
                 default:
-                    System.out.println("invalid transaction");
+                    System.out.println("error: invalid transaction");
                     break;
             }
         }
