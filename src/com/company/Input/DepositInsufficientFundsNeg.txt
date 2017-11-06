@@ -2,6 +2,6 @@ login
 agent
 deposit
 1234567
--10000
+abcd
 logout
 quit
