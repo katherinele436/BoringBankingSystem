@@ -1,0 +1,7 @@
+login
+machine
+withdraw
+7654321
+10000
+logout
+quit

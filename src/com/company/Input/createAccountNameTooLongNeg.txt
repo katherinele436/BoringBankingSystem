@@ -1,0 +1,7 @@
+login
+agent
+createacct
+9875123
+ThisIsAVeryVeryVeryLongAccountName
+logout
+quit

@@ -1,0 +1,7 @@
+login
+machine
+deleteacct
+1234567
+JohnDoe
+logout
+quit
