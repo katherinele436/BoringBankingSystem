@@ -5,4 +5,4 @@ transfer
 1234567
 10000
 logout
-
+quit
