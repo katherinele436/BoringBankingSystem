@@ -3,5 +3,5 @@ log in as agent or machine?
 logged in as machine
 enter account number:
 enter amount:
-Deposited $100.00 into account 1234567
+deposited $100.00 into account 1234567
 logged out
