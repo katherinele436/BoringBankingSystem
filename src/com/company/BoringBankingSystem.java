@@ -2,21 +2,22 @@ package com.company;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.*;
 
 public class BoringBankingSystem {
     public static Session Account = null;
-    public static ArrayList<Integer> validAccountsList = null;
+    public static ArrayList<String> validAccountsList = null;
     public static String summaryFile;
     public static String accountsListFile;
     public static  BufferedReader br = null;
 
-    public static ArrayList<Integer> readValidAccounts() throws Exception {
-        ArrayList<Integer> accountsList = new ArrayList<>();
+    public static ArrayList<String> readValidAccounts() throws Exception {
+        ArrayList<String> accountsList = new ArrayList<>();
         FileReader theList = new FileReader(accountsListFile);
         BufferedReader readList = new BufferedReader(theList);
         String line;
         while ((line = readList.readLine()) != null && !line.equals("0000000")) {
-            accountsList.add(Integer.parseInt(line));
+            accountsList.add(line);
         }
         return accountsList;
     }
@@ -47,7 +48,7 @@ public class BoringBankingSystem {
 
     public static void createAccount() throws IOException {
         if (Account.mode){
-            int accNum = getInt("enter new account number:");
+            String accNum = getStringInput("enter new account number:");
             //if account is not in Valid Account List
             if (validAccList(accNum)) {
                 System.out.println("error: account number already in use, transaction ended");
@@ -71,7 +72,7 @@ public class BoringBankingSystem {
 
     public static void deleteAccount() throws IOException {
         if (Account.mode) {
-            int accNum = getInt("enter account number:");
+            String accNum = getStringInput("enter account number:");
             //if Account is in valid account list
             if (!validAccList(accNum)) {
                 return;
@@ -86,8 +87,8 @@ public class BoringBankingSystem {
     }
 
     public static void deposit() throws IOException{
-        int input = getInt("enter account number:");
-        int account_number;
+        String input = getStringInput("enter account number:");
+        String account_number;
         if (validAccList((input))){
             account_number = input;
         }
@@ -114,8 +115,8 @@ public class BoringBankingSystem {
     }
 
     public static void withdraw()throws IOException{
-        int input = getInt("enter account number:");
-        int account_number;
+        String input = getStringInput("enter account number:");
+        String account_number;
         if (validAccList(input)){
             account_number = input;
         }
@@ -148,8 +149,8 @@ public class BoringBankingSystem {
     }
 
     public static void transfer() throws IOException{
-        int input = getInt("transfer from account number:");
-        int account_one, account_two;
+        String input = getStringInput("transfer from account number:");
+        String account_one, account_two;
         if (validAccList(input)){
             account_one = input;
         }
@@ -157,7 +158,7 @@ public class BoringBankingSystem {
             System.out.println("error: account does not exist, transaction ended");
             return;
         }
-        input = getInt("transfer to account number:");
+        input = getStringInput("transfer to account number:");
         if (validAccList(input)){
             account_two = input;
         }
@@ -280,7 +281,7 @@ public class BoringBankingSystem {
     }
 
     //used to test if account number is already in valid accounts list
-    public static boolean validAccList(int accNum) {
+    public static boolean validAccList(String accNum) {
         if (validAccountsList.contains(accNum)){
             return true;
         }
@@ -290,10 +291,13 @@ public class BoringBankingSystem {
     }
 
     //used to test if account number is correctly formatted
-    public static boolean validAccNum(int accNum){
-        if (accNum < 1000000 || accNum > 10000000) {
+    public static boolean validAccNum(String accNum){
+        if (accNum.length() != 7) {
             System.out.println("error: account number must be 7 characters long, transaction ended");
             return false;
+        }
+        if (accNum.startsWith("0")){
+            System.out.println("error: account number cannot start with 0, transaction ended");
         }
         return true;
     }
