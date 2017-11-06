@@ -1,8 +1,8 @@
 login
 machine
 transfer
-7654321
+7645321
 1234567
 10000
 logout
-quit
+
