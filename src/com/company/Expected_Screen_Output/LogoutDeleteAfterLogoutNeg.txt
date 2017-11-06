@@ -1,5 +1,5 @@
 logged in
-log in as agent or machine?
-logged in as agent
-logged out
-error: invalid login
+log in as agent or machine?
+logged in as agent
+logged out
+error: log in invalid

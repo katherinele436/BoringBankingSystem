@@ -1,4 +1,4 @@
 logged in
-log in as agent or machine?
+log in as agent or machine?
 logged in as agent
-logged out
+logged out
