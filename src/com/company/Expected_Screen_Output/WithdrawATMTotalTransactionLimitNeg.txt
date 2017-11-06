@@ -1,0 +1,10 @@
+logged in
+log in as agent or machine?
+logged in as machine
+enter account number:
+enter amount:
+withdrew $100.00 from account 1234567
+enter account number:
+enter amount:
+error: single session withdraw limit exceeded, transaction ended
+logged out
