@@ -133,16 +133,26 @@ public class BoringBankingSystem {
         }
         double dollars;
         if (withinSingleWithdrawLimit(amount)){
-            if (withinTotalWithdrawLimit(amount)) {
-                dollars = amount / 100;
-            }
-            else{
-                System.out.println("error: total withdraw limit exceeded, transaction ended");
                 return;
             }
         }else{
             System.out.println("error: single withdraw limit exceeded, transaction ended");
             return;
+        }
+
+        if(!Account.mode){//if Account is set to machine mode
+            if (Account.withdrawMap.get(account_number)==null){//account has yet to make a withdraw this session
+                Account.withdrawMap.put(account_number,amount);
+            }else{
+                int accountWithdrawn=Account.withdrawMap.get(account_number)
+                if(accountWithdrawn+amount<10000){
+                    Account.withdrawMap.get(account_number)+=amount;
+                }else{
+                    System.out.println("error: total withdraw limit exceeded for account:" + account_number +" , transaction ended");
+                    return
+                }
+
+            }
         }
         System.out.printf("withdrew $%.2f from account %s\n", dollars, account_number);
         Account.summary.add("WDR " + account_number + " "+ amount + " " + "0000000" + " ***\n");
