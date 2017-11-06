@@ -113,6 +113,10 @@ public class BoringBankingSystem {
             if (!Account.deletedAccounts.contains(input)) {
                 account_number = input;
             }
+            else{
+                System.out.println("error: account has been deleted, transaction ended");
+                return;
+            }
         }
         // prints error if account is not on valid accounts list
         else{
@@ -151,6 +155,10 @@ public class BoringBankingSystem {
             // ensures account is not deleted
             if (!Account.deletedAccounts.contains(input)) {
                 account_number = input;
+            }
+            else{
+                System.out.println("error: account has been deleted, transaction ended");
+                return;
             }
         }
         else{
@@ -204,6 +212,10 @@ public class BoringBankingSystem {
             if (!Account.deletedAccounts.contains(input)) {
                 account_one = input;
             }
+            else{
+                System.out.println("error: account has been deleted, transaction ended");
+                return;
+            }
         }
         // errors if account is not in valid accounts list
         else{
@@ -215,6 +227,10 @@ public class BoringBankingSystem {
         if (validAccList(input)){
             if (!Account.deletedAccounts.contains(input)) {
                 account_two = input;
+            }
+            else{
+                System.out.println("error: account has been deleted, transaction ended");
+                return;
             }
         }
         // errors if account two is not in valid accounts list
