@@ -227,11 +227,20 @@ public class BoringBankingSystem {
     }
 
     public static boolean withinSingleDepositLimit(int amount){
-        if(amount <= 0 || amount >= 100000){
-            return false;
-        } else{
-            Account.totalDeposit += amount;
-            return true;
+        if (Account.mode){
+            if(amount <= 0 || amount > 99999999){
+                return false;
+            }else{
+                Account.totalDeposit += amount;
+                return true;
+            }
+        }else{
+            if(amount <= 0 || amount > 100000){
+                return false;
+            }else{
+                Account.totalDeposit += amount;
+                return true;
+            }
         }
     }
 
