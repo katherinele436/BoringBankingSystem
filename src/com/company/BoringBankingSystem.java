@@ -63,7 +63,7 @@ public class BoringBankingSystem {
             }
             System.out.println("account " + accNum + " is created for " + accName);
             // append summary string to summary list
-            Account.summary.add("NEW " + accNum + "000 0000000 " + accName + "\n");
+            Account.summary.add("NEW " + accNum + " 000 0000000 " + accName + "\n");
         }
         else {
             System.out.println("error: cannot create account in machine mode, transaction ended");
@@ -110,7 +110,7 @@ public class BoringBankingSystem {
             System.out.println("error: single deposit limit exceeded, transaction ended");
             return;
         }
-        System.out.printf("deposited $%.2f into account %d\n", dollars, account_number);
+        System.out.printf("deposited $%.2f into account %s\n", dollars, account_number);
         Account.summary.add("DEP " + account_number + " "+ amount + " " + "0000000" + " ***\n");
     }
 
@@ -144,7 +144,7 @@ public class BoringBankingSystem {
             System.out.println("error: single withdraw limit exceeded, transaction ended");
             return;
         }
-        System.out.printf("withdrew $%.2f from account %d\n", dollars, account_number);
+        System.out.printf("withdrew $%.2f from account %s\n", dollars, account_number);
         Account.summary.add("WDR " + account_number + " "+ amount + " " + "0000000" + " ***\n");
     }
 
@@ -181,7 +181,7 @@ public class BoringBankingSystem {
             System.out.println("error: single transfer limit exceeded, transaction ended");
             return;
         }
-        System.out.printf("transferred $%.2f from account %d to account %d\n", dollars, account_one, account_two);
+        System.out.printf("transferred $%.2f from account %s to account %s\n", dollars, account_one, account_two);
         Account.summary.add("XFR " + account_one + " " + amount + " " + account_two + " ***\n");
     }
 
@@ -298,6 +298,7 @@ public class BoringBankingSystem {
         }
         if (accNum.startsWith("0")){
             System.out.println("error: account number cannot start with 0, transaction ended");
+            return false;
         }
         return true;
     }
