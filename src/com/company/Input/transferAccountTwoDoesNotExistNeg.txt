@@ -5,4 +5,4 @@ transfer
 7645321
 10000
 logout
-
+quit
