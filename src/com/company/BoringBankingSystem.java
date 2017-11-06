@@ -95,6 +95,7 @@ public class BoringBankingSystem {
             System.out.println("account " + accNum + " deleted");
             // append summary string to summary list
             Account.summary.add("DEL " + accNum + " 000 0000000 ***\n");
+            Account.deletedAccounts.add(accNum);
         }
         // prints error if mode is not agent
         else {
@@ -108,7 +109,10 @@ public class BoringBankingSystem {
         String account_number;
         // ensures account is on valid accounts list
         if (validAccList((input))){
-            account_number = input;
+            // ensures account is not deleted
+            if (!Account.deletedAccounts.contains(input)) {
+                account_number = input;
+            }
         }
         // prints error if account is not on valid accounts list
         else{
@@ -142,8 +146,12 @@ public class BoringBankingSystem {
     public static void withdraw()throws IOException{
         String input = getStringInput("enter account number:");
         String account_number;
+        // ensures account is in valid accounts list
         if (validAccList(input)){
-            account_number = input;
+            // ensures account is not deleted
+            if (!Account.deletedAccounts.contains(input)) {
+                account_number = input;
+            }
         }
         else{
             System.out.println("error: account does not exist, transaction ended");
@@ -192,7 +200,10 @@ public class BoringBankingSystem {
         String account_one, account_two;
         // ensures account is in valid accounts list
         if (validAccList(input)){
-            account_one = input;
+            // ensures account is not deleted
+            if (!Account.deletedAccounts.contains(input)) {
+                account_one = input;
+            }
         }
         // errors if account is not in valid accounts list
         else{
@@ -202,7 +213,9 @@ public class BoringBankingSystem {
         input = getStringInput("transfer to account number:");
         // ensures account two is in valid accounts list
         if (validAccList(input)){
-            account_two = input;
+            if (!Account.deletedAccounts.contains(input)) {
+                account_two = input;
+            }
         }
         // errors if account two is not in valid accounts list
         else{
