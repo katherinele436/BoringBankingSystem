@@ -2,12 +2,12 @@ package com.company;
 import java.util.*;
 
 public class Session {
+    // array list for all summary strings to be outputted to the summary file
     ArrayList<String> summary = new ArrayList<>();
     //true is agent & false is machine
     boolean mode;
-    public Map<String,Interger> withdrawMap= new HashMap<String,Interger>();
-    int totalTransfer;
-    int totalDeposit;
+    // maps account numbers to the total amount withdrawn in a session
+    public Map<String,Integer> withdrawMap= new HashMap<>();
     int totalWithdraw;
 
 }
