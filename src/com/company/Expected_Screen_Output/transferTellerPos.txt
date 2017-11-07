@@ -4,4 +4,5 @@ logged in as agent
 transfer from account number:
 transfer to account number:
 enter amount:
+transferred $10000.00 from account 1234567 to account 2345678
 logged out
