@@ -3,4 +3,6 @@ log in as agent or machine?
 logged in as machine
 transfer from account number:
 error: account does not exist, transaction ended
+error: invalid transaction
+error: invalid transaction
 logged out
