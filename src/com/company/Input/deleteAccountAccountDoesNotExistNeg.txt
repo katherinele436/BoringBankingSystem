@@ -2,6 +2,5 @@ login
 agent
 deleteacct
 1111111
-JohnDoe
 logout
 quit
