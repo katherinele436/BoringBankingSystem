@@ -1,0 +1,7 @@
+logged in
+log in as agent or machine?
+logged in as agent
+enter new account number:
+enter new account name:
+error: account name has a non-alphanumeric character, transaction ended
+logged out

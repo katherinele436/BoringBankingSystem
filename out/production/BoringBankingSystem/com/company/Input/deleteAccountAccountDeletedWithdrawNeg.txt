@@ -1,0 +1,10 @@
+login
+agent
+deleteacct
+1234567
+JohnDoe
+withdraw
+1234567
+1000
+logout
+quit

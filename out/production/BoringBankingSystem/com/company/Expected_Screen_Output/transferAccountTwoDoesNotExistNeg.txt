@@ -1,0 +1,7 @@
+logged in
+log in as agent or machine?
+logged in as machine
+transfer from account number:
+transfer to account number:
+error: account does not exist, transaction ended
+logged out

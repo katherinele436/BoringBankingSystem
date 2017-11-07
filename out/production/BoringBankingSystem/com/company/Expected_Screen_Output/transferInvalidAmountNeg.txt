@@ -1,0 +1,8 @@
+logged in
+log in as agent or machine?
+logged in as machine
+transfer from account number:
+transfer to account number:
+enter amount:
+error: invalid amount, transaction ended
+logged out

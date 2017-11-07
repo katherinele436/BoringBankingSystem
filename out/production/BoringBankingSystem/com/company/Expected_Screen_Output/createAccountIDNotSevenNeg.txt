@@ -1,0 +1,7 @@
+logged in
+log in as agent or machine?
+logged in as agent
+enter new account number:
+error: account number must be 7 characters long, transaction ended
+error: invalid transaction
+logged out

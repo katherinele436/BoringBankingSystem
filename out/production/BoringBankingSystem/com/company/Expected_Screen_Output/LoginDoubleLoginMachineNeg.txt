@@ -1,0 +1,5 @@
+logged in
+log in as agent or machine?
+logged in as machine
+error: already logged in
+logged out

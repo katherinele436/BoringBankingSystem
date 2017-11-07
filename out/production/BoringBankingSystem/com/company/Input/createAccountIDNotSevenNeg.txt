@@ -1,0 +1,7 @@
+login
+agent
+createacct
+654321
+HelloWorld
+logout
+quit

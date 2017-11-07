@@ -173,27 +173,26 @@ public class BoringBankingSystem {
         }
         double dollars = amount / 100;
         // ensures amount is within single withdraw limit
-        if (withinSingleWithdrawLimit(amount)) {
-            return;
+        if (withinSingleWithdrawLimit(amount)){
+            // now checking if amount is within total withdraw limit for the account
+            if (Account.mode==false) {//if Account is set to machine mode
+                if (Account.withdrawMap.containsKey(account_number)) {//account has yet to make a withdraw this session
+                    int accountWithdrawn = Account.withdrawMap.get(account_number);
+                    if (accountWithdrawn + amount < 10000) {
+                        Account.withdrawMap.put(account_number, accountWithdrawn + amount);//updates the certain map's key with the proper amount
+                    } else {
+                        System.out.println("error: total withdraw limit exceeded for account:" + account_number + " , transaction ended");
+                        return;
+                    }
+                } else {
+                    Account.withdrawMap.put(account_number, amount);
+                }
         }
         // errors if amount is not within single withdraw limit
         else {
             System.out.println("error: single withdraw limit exceeded, transaction ended");
             return;
         }
-
-        if (!Account.mode) {//if Account is set to machine mode
-            if (Account.withdrawMap.containsKey(account_number)) {//account has yet to make a withdraw this session
-                int accountWithdrawn = Account.withdrawMap.get(account_number);
-                if (accountWithdrawn + amount < 10000) {
-                    Account.withdrawMap.put(account_number, accountWithdrawn + amount);//updates the certain map's key with the proper amount
-                } else {
-                    System.out.println("error: total withdraw limit exceeded for account:" + account_number + " , transaction ended");
-                    return;
-                }
-            } else {
-                Account.withdrawMap.put(account_number, amount);
-            }
             System.out.printf("withdrew $%.2f from account %s\n", dollars, account_number);
             Account.summary.add("WDR " + account_number + " " + amount + " " + "0000000" + " ***\n");
         }

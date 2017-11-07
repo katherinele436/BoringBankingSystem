@@ -1,0 +1,7 @@
+login
+agent
+createacct
+9875123
+Special&Char
+logout
+quit

@@ -1,0 +1,5 @@
+logged in
+log in as agent or machine?
+logged in as machine
+error: cannot delete account in machine mode, transaction ended
+logged out

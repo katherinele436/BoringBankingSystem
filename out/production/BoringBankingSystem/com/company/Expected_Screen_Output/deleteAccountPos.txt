@@ -1,0 +1,6 @@
+logged in
+log in as agent or machine?
+logged in as agent
+enter account number:
+account 1234567 deleted
+logged out

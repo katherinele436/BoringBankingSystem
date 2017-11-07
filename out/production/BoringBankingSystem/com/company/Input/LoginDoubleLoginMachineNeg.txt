@@ -1,0 +1,5 @@
+login
+machine
+login
+logout
+quit

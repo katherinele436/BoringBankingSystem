@@ -1,0 +1,7 @@
+logged in
+log in as agent or machine?
+logged in as agent
+enter account number:
+enter amount:
+error: single deposit limit exceeded, transaction ended
+logged out
