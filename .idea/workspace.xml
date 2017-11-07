@@ -28,13 +28,15 @@
       <file leaf-file-name="BoringBankingSystem.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/BoringBankingSystem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
+            <state relative-caret-position="446">
               <caret line="180" column="55" lean-forward="false" selection-start-line="180" selection-start-column="55" selection-end-line="180" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#readValidAccounts#0;class#BoringBankingSystem#0" expanded="false" />
                 <element signature="method#waitForLogin#0;class#BoringBankingSystem#0" expanded="false" />
                 <element signature="method#createAccount#0;class#BoringBankingSystem#0" expanded="false" />
+                <element signature="method#deleteAccount#0;class#BoringBankingSystem#0" expanded="false" />
+                <element signature="method#deposit#0;class#BoringBankingSystem#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -282,6 +284,8 @@
             <element signature="method#readValidAccounts#0;class#BoringBankingSystem#0" expanded="false" />
             <element signature="method#waitForLogin#0;class#BoringBankingSystem#0" expanded="false" />
             <element signature="method#createAccount#0;class#BoringBankingSystem#0" expanded="false" />
+            <element signature="method#deleteAccount#0;class#BoringBankingSystem#0" expanded="false" />
+            <element signature="method#deposit#0;class#BoringBankingSystem#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -303,6 +307,8 @@
             <element signature="method#readValidAccounts#0;class#BoringBankingSystem#0" expanded="false" />
             <element signature="method#waitForLogin#0;class#BoringBankingSystem#0" expanded="false" />
             <element signature="method#createAccount#0;class#BoringBankingSystem#0" expanded="false" />
+            <element signature="method#deleteAccount#0;class#BoringBankingSystem#0" expanded="false" />
+            <element signature="method#deposit#0;class#BoringBankingSystem#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -317,13 +323,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/BoringBankingSystem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="446">
           <caret line="180" column="55" lean-forward="false" selection-start-line="180" selection-start-column="55" selection-end-line="180" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#readValidAccounts#0;class#BoringBankingSystem#0" expanded="false" />
             <element signature="method#waitForLogin#0;class#BoringBankingSystem#0" expanded="false" />
             <element signature="method#createAccount#0;class#BoringBankingSystem#0" expanded="false" />
+            <element signature="method#deleteAccount#0;class#BoringBankingSystem#0" expanded="false" />
+            <element signature="method#deposit#0;class#BoringBankingSystem#0" expanded="false" />
           </folding>
         </state>
       </provider>
