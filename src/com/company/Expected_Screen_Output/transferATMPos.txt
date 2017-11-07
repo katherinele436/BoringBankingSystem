@@ -4,4 +4,5 @@ logged in as machine
 transfer from account number:
 transfer to account number:
 enter amount:
+transferred $100.00 from account 1234567 to 2345678
 logged out
