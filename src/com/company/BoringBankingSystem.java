@@ -147,59 +147,56 @@ public class BoringBankingSystem {
     }
 
     // handles inputs after withdraw command is inputted
-    public static void withdraw()throws IOException{
+    public static void withdraw()throws IOException {
         String input = getStringInput("enter account number:");
         String account_number;
         // ensures account is in valid accounts list
-        if (validAccList(input)){
+        if (validAccList(input)) {
             // ensures account is not deleted
             if (!Account.deletedAccounts.contains(input)) {
                 account_number = input;
-            }
-            else{
+            } else {
                 System.out.println("error: account has been deleted, transaction ended");
                 return;
             }
-        }
-        else{
+        } else {
             System.out.println("error: account does not exist, transaction ended");
             return;
         }
         int amount;
         // handles input for amount to withdraw, catches invalid input
-        try{
+        try {
             amount = getInt("enter amount:");
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("error: invalid amount, transaction ended");
             return;
         }
-        double dollars=amount/100;
+        double dollars = amount / 100;
         // ensures amount is within single withdraw limit
-        if (withinSingleWithdrawLimit(amount)){
+        if (withinSingleWithdrawLimit(amount)) {
             return;
         }
         // errors if amount is not within single withdraw limit
-        else{
+        else {
             System.out.println("error: single withdraw limit exceeded, transaction ended");
             return;
         }
 
-        if(!Account.mode){//if Account is set to machine mode
-            if (!Account.withdrawMap.containsKey(account_number)){//account has yet to make a withdraw this session
-                Account.withdrawMap.put(account_number,amount);
-            }else{
-                int accountWithdrawn=Account.withdrawMap.get(account_number);
-                if(accountWithdrawn+amount < 10000){
-                    Account.withdrawMap.put(account_number,accountWithdrawn+amount);//updates the certain map's key with the proper amount
-                }else{
-                    System.out.println("error: total withdraw limit exceeded for account:" + account_number +" , transaction ended");
-                    return
+        if (!Account.mode) {//if Account is set to machine mode
+            if (Account.withdrawMap.containsKey(account_number)) {//account has yet to make a withdraw this session
+                int accountWithdrawn = Account.withdrawMap.get(account_number);
+                if (accountWithdrawn + amount < 10000) {
+                    Account.withdrawMap.put(account_number, accountWithdrawn + amount);//updates the certain map's key with the proper amount
+                } else {
+                    System.out.println("error: total withdraw limit exceeded for account:" + account_number + " , transaction ended");
+                    return;
                 }
-
+            } else {
+                Account.withdrawMap.put(account_number, amount);
             }
+            System.out.printf("withdrew $%.2f from account %s\n", dollars, account_number);
+            Account.summary.add("WDR " + account_number + " " + amount + " " + "0000000" + " ***\n");
         }
-        System.out.printf("withdrew $%.2f from account %s\n", dollars, account_number);
-        Account.summary.add("WDR " + account_number + " "+ amount + " " + "0000000" + " ***\n");
     }
 
     // handles inputs after transfer command is inputted
