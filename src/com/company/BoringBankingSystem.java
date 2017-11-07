@@ -178,7 +178,7 @@ public class BoringBankingSystem {
             if (Account.mode==false) {//if Account is set to machine mode
                 if (Account.withdrawMap.containsKey(account_number)) {//account has yet to make a withdraw this session
                     int accountWithdrawn = Account.withdrawMap.get(account_number);
-                    if (accountWithdrawn + amount < 10000) {
+                    if (accountWithdrawn + amount < 100000) {
                         Account.withdrawMap.put(account_number, accountWithdrawn + amount);//updates the certain map's key with the proper amount
                     } else {
                         System.out.println("error: total withdraw limit exceeded for account:" + account_number + " , transaction ended");
