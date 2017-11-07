@@ -3,8 +3,8 @@ log in as agent or machine?
 logged in as agent
 enter account number:
 account 1234567 deleted
-enter to account number:
 enter from account number:
+enter to account number:
 error: account has been deleted, transaction ended
 error: invalid transaction
 logged out
