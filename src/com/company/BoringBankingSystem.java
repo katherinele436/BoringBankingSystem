@@ -185,7 +185,7 @@ public class BoringBankingSystem {
         }
 
         if(!Account.mode){//if Account is set to machine mode
-            if (Account.withdrawMap.get(account_number) == null){//account has yet to make a withdraw this session
+            if (!Account.withdrawMap.containsKey(account_number)){//account has yet to make a withdraw this session
                 Account.withdrawMap.put(account_number,amount);
             }else{
                 int accountWithdrawn=Account.withdrawMap.get(account_number);
