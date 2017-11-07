@@ -6,4 +6,5 @@ account 1234567 deleted
 enter to account number:
 enter from account number:
 error: account has been deleted, transaction ended
+error: invalid transaction
 logged out
