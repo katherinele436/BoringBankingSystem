@@ -173,9 +173,9 @@ public class BoringBankingSystem {
         }
         double dollars = amount / 100;
         // ensures amount is within single withdraw limit
-        if (withinSingleWithdrawLimit(amount)){
+        if (withinSingleWithdrawLimit(amount)) {
             // now checking if amount is within total withdraw limit for the account
-            if (Account.mode==false) {//if Account is set to machine mode
+            if (Account.mode == false) {//if Account is set to machine mode
                 if (Account.withdrawMap.containsKey(account_number)) {//account has yet to make a withdraw this session
                     int accountWithdrawn = Account.withdrawMap.get(account_number);
                     if (accountWithdrawn + amount < 100000) {
@@ -187,15 +187,14 @@ public class BoringBankingSystem {
                 } else {
                     Account.withdrawMap.put(account_number, amount);
                 }
-        }
-        // errors if amount is not within single withdraw limit
-        else {
+            }
+            // errors if amount is not within single withdraw limit
+        } else {
             System.out.println("error: single withdraw limit exceeded, transaction ended");
             return;
         }
             System.out.printf("withdrew $%.2f from account %s\n", dollars, account_number);
             Account.summary.add("WDR " + account_number + " " + amount + " " + "0000000" + " ***\n");
-        }
     }
 
     // handles inputs after transfer command is inputted
