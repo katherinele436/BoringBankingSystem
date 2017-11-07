@@ -6,5 +6,5 @@ enter amount:
 withdrew $100.00 from account 1234567
 enter account number:
 enter amount:
-error: single session withdraw limit exceeded, transaction ended
+error: total withdraw limit exceeded for account:1234567 , transaction ended
 logged out
