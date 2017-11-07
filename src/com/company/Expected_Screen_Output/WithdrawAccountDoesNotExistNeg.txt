@@ -3,4 +3,5 @@ log in as agent or machine?
 logged in as machine
 enter account number:
 error: account does not exist, transaction ended
+error: invalid transaction
 logged out
