@@ -2,7 +2,6 @@ login
 agent
 deleteacct
 1234567
-JohnDoe
 deposit
 1234567
 1000
