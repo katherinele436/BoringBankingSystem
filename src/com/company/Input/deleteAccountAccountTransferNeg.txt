@@ -2,9 +2,8 @@ login
 agent
 deleteacct
 1234567
-JohnDoe
 transfer
-7654321
+2345678
 1234567
 1000
 logout
