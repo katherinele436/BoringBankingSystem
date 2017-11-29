@@ -382,6 +382,13 @@ public class BoringBankingSystem {
     //conditional test for correctly formatted account number
     public static boolean validAccNum(String accNum){
         // errors if account number is not 7 characters
+        int accNumber;
+        try{
+            accNumber = Integer.parseInt(accNum);
+        }catch(NumberFormatException e){
+            System.out.println("error: account number must be digits, transaction ended");
+            return false;
+        }
         if (accNum.length() != 7) {
             System.out.println("error: account number must be 7 characters long, transaction ended");
             return false;
