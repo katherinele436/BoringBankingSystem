@@ -98,7 +98,7 @@ public class BoringBankingSystem {
             }
             System.out.println("account " + accNum + " deleted");
             // append summary string to summary list
-            Account.summary.add("DEL " + accNum + " 000 0000000 " + accName + add"\n");
+            Account.summary.add("DEL " + accNum + " 000 0000000 " + accName +"\n");
             Account.deletedAccounts.add(accNum);
         }
         // prints error if mode is not agent
