@@ -301,12 +301,7 @@ public class BoringBankingSystem {
 
     // parses string input for integer, catches invalid integer exceptions
     public static int getInt( String prompt) throws IOException {
-        try {
             return Integer.parseInt(getStringInput(prompt));
-        }
-        catch (NumberFormatException e) {
-            return 0;
-        }
     }
 
     // conditional test for single deposit limits depending on mode
