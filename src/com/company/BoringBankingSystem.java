@@ -92,9 +92,13 @@ public class BoringBankingSystem {
             if (!validAccList(accNum)) {
                 return;
             }
+            String accName = getStringInput("enter account name:");
+            if (!validAccName(accName)) {
+                return;
+            }
             System.out.println("account " + accNum + " deleted");
             // append summary string to summary list
-            Account.summary.add("DEL " + accNum + " 000 0000000 ***\n");
+            Account.summary.add("DEL " + accNum + " 000 0000000 " + accName + add"\n");
             Account.deletedAccounts.add(accNum);
         }
         // prints error if mode is not agent
